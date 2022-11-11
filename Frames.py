@@ -1,14 +1,14 @@
 import tkinter
 from PIL import ImageTk
 from PIL import Image
-# import Gui
+# from Gui import Gui
 
 
 class Frames:
     xAxis = 0
     yAxis = 0
     MainWindow: tkinter.Tk
-    # MainObj: Gui.Gui
+    # MainObj: Gui
     MainObj: object
     winFrame: tkinter.Frame
     btnClose: tkinter.Button
