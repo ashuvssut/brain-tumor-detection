@@ -1,22 +1,23 @@
 import tkinter
 from PIL import ImageTk
 from PIL import Image
-import gui
+# import Gui
 
 
 class Frames:
     xAxis = 0
     yAxis = 0
     MainWindow: tkinter.Tk
-    MainObj: gui.Gui
+    # MainObj: Gui.Gui
+    MainObj: object
     winFrame: tkinter.Frame
     btnClose: tkinter.Button
     btnView: tkinter.Button
     imageTk: ImageTk.PhotoImage
     image: Image.Image
+    labelImg: tkinter.Label
     method = object()
     callingObj = object()
-    labelImg = 0
 
     def __init__(self, mainObj, MainWin, wWidth, wHeight, function, Object, xAxis=10, yAxis=10):
         self.xAxis = xAxis

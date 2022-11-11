@@ -2,17 +2,17 @@ import tkinter
 from PIL import Image
 from tkinter import filedialog
 import cv2 as cv
-from frames import Frames
-from displayTumor import DisplayTumor
+from Frames import Frames
+from DisplayTumor import DisplayTumor
 from predictTumor import predictTumor
 
 
 class Gui:
-    MainWindow = 0
+    MainWindow: tkinter.Tk
     listOfWinFrame: list[Frames] = list()
     FirstFrame: Frames
     val: tkinter.IntVar
-    fileName = 0
+    fileName: str
     DT: DisplayTumor
 
     wHeight = 700
@@ -26,7 +26,7 @@ class Gui:
 
         self.DT = DisplayTumor()
 
-        self.fileName = tkinter.StringVar()
+        self.fileName = tkinter.StringVar().get()
 
         self.FirstFrame = Frames(
             self, MainWindow, self.wWidth, self.wHeight, 0, 0)
