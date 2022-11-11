@@ -6,7 +6,7 @@ import imutils
 model = load_model('brain_tumor_detector.h5')
 
 
-def predictTumor(image):
+def predictTumor(image: cv.Mat):
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     gray = cv.GaussianBlur(gray, (5, 5), 0)
 
@@ -17,7 +17,8 @@ def predictTumor(image):
     thresh = cv.dilate(thresh, None, iterations=2)
 
     # Find contours in thresholded image, then grab the largest one
-    cnts = cv.findContours(thresh.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnts = cv.findContours(
+        thresh.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     c = max(cnts, key=cv.contourArea)
 
@@ -30,8 +31,12 @@ def predictTumor(image):
     # crop new image out of the original image using the four extreme points (left, right, top, bottom)
     new_image = image[extTop[1]:extBot[1], extLeft[0]:extRight[0]]
 
-    image = cv.resize(new_image, dsize=(240, 240), interpolation=cv.INTER_CUBIC)
-    image = image / 255.
+    image = cv.resize(new_image, dsize=(240, 240),
+                      interpolation=cv.INTER_CUBIC)
+
+    # print(image)
+    image = image / 255
+    # print(image)
 
     image = image.reshape((1, 240, 240, 3))
 
