@@ -1,14 +1,14 @@
 import tkinter
 from PIL import ImageTk
 from PIL import Image
-# from gui import Gui
+import gui
 
 
 class Frames:
     xAxis = 0
     yAxis = 0
     MainWindow: tkinter.Tk
-    MainObj: object
+    MainObj: gui.Gui
     winFrame: tkinter.Frame
     btnClose: tkinter.Button
     btnView: tkinter.Button
@@ -77,6 +77,7 @@ class Frames:
             img = self.MainObj.DT.getImage()
         else:
             print("Error: No specified object for getImage() function")
+            return
 
         jpgImg = Image.fromarray(img)
         current = 0
