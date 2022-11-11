@@ -12,7 +12,8 @@ class Frames:
     winFrame: tkinter.Frame
     btnClose: tkinter.Button
     btnView: tkinter.Button
-    image = object()
+    imageTk: ImageTk.PhotoImage
+    image: Image.Image
     method = object()
     callingObj = object()
     labelImg = 0
@@ -101,12 +102,11 @@ class Frames:
         self.btnClose.destroy()
         self.btnView.destroy()
 
-    def readImage(self, img):
+    def readImage(self, img: Image.Image):
         self.image = img
 
     def displayImage(self):
-        imgTk = self.image.resize((250, 250), Image.ANTIALIAS)
-        imgTk = ImageTk.PhotoImage(image=imgTk)
-        self.image = imgTk
-        self.labelImg = tkinter.Label(self.winFrame, image=self.image)
+        img = self.image.resize((250, 250), Image.ANTIALIAS)
+        self.imageTk = ImageTk.PhotoImage(image=img)
+        self.labelImg = tkinter.Label(self.winFrame, image=self.imageTk)
         self.labelImg.place(x=700, y=150)
