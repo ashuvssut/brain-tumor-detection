@@ -1,15 +1,17 @@
 import tkinter
 from PIL import ImageTk
 from PIL import Image
+# from gui import Gui
+
 
 class Frames:
     xAxis = 0
     yAxis = 0
-    MainWindow = 0
-    MainObj = 0
-    winFrame = object()
-    btnClose = object()
-    btnView = object()
+    MainWindow: tkinter.Tk
+    MainObj: object
+    winFrame: tkinter.Frame
+    btnClose: tkinter.Button
+    btnView: tkinter.Button
     image = object()
     method = object()
     callingObj = object()
@@ -28,43 +30,38 @@ class Frames:
             self.method = function
 
         global winFrame
-        self.winFrame = tkinter.Frame(self.MainWindow, width=wWidth, height=wHeight)
+        self.winFrame = tkinter.Frame(
+            self.MainWindow, width=wWidth, height=wHeight)
         self.winFrame['borderwidth'] = 5
         self.winFrame['relief'] = 'ridge'
         self.winFrame.place(x=xAxis, y=yAxis)
 
         self.btnClose = tkinter.Button(self.winFrame, text="Close", width=8,
-                                      command=lambda: self.quitProgram(self.MainWindow))
+                                       command=lambda: self.quitProgram(self.MainWindow))
         self.btnClose.place(x=1020, y=600)
-        self.btnView = tkinter.Button(self.winFrame, text="View", width=8, command=lambda: self.NextWindow(self.method))
+        self.btnView = tkinter.Button(
+            self.winFrame, text="View", width=8, command=lambda: self.NextWindow(self.method))
         self.btnView.place(x=900, y=600)
-
 
     def setCallObject(self, obj):
         self.callingObj = obj
 
-
     def setMethod(self, function):
         self.method = function
-
 
     def quitProgram(self, window):
         global MainWindow
         self.MainWindow.destroy()
 
-
     def getFrames(self):
         global winFrame
         return self.winFrame
 
-
     def unhide(self):
         self.winFrame.place(x=self.xAxis, y=self.yAxis)
 
-
     def hide(self):
         self.winFrame.place_forget()
-
 
     def NextWindow(self, methodToExecute):
         listWF = list(self.MainObj.listOfWinFrame)
@@ -100,15 +97,12 @@ class Frames:
 
         print("Step " + str(current) + " Extraction complete!")
 
-
     def removeComponent(self):
         self.btnClose.destroy()
         self.btnView.destroy()
 
-
     def readImage(self, img):
         self.image = img
-
 
     def displayImage(self):
         imgTk = self.image.resize((250, 250), Image.ANTIALIAS)

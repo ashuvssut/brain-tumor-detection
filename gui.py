@@ -2,18 +2,18 @@ import tkinter
 from PIL import Image
 from tkinter import filedialog
 import cv2 as cv
-from frames import *
-from displayTumor import *
-from predictTumor import *
+from frames import Frames
+from displayTumor import DisplayTumor
+from predictTumor import predictTumor
 
 
 class Gui:
     MainWindow = 0
-    listOfWinFrame = list()
-    FirstFrame = object()
-    val = 0
+    listOfWinFrame: list[Frames] = list()
+    FirstFrame: Frames
+    val: tkinter.IntVar
     fileName = 0
-    DT = object()
+    DT: DisplayTumor
 
     wHeight = 700
     wWidth = 1180
@@ -28,14 +28,17 @@ class Gui:
 
         self.fileName = tkinter.StringVar()
 
-        self.FirstFrame = Frames(self, MainWindow, self.wWidth, self.wHeight, 0, 0)
+        self.FirstFrame = Frames(
+            self, MainWindow, self.wWidth, self.wHeight, 0, 0)
         self.FirstFrame.btnView['state'] = 'disable'
 
         self.listOfWinFrame.append(self.FirstFrame)
 
-        WindowLabel = tkinter.Label(self.FirstFrame.getFrames(), text="Brain Tumor Detection", height=1, width=40)
+        WindowLabel = tkinter.Label(self.FirstFrame.getFrames(
+        ), text="Brain Tumor Detection", height=1, width=40)
         WindowLabel.place(x=320, y=30)
-        WindowLabel.configure(background="White", font=("Comic Sans MS", 16, "bold"))
+        WindowLabel.configure(background="White", font=(
+            "Comic Sans MS", 16, "bold"))
 
         self.val = tkinter.IntVar()
         RB1 = tkinter.Radiobutton(self.FirstFrame.getFrames(), text="Detect Tumor", variable=self.val,
@@ -45,7 +48,8 @@ class Gui:
                                   variable=self.val, value=2, command=self.check)
         RB2.place(x=250, y=250)
 
-        browseBtn = tkinter.Button(self.FirstFrame.getFrames(), text="Browse", width=8, command=self.browseWindow)
+        browseBtn = tkinter.Button(self.FirstFrame.getFrames(
+        ), text="Browse", width=8, command=self.browseWindow)
         browseBtn.place(x=800, y=550)
 
         MainWindow.mainloop()
@@ -67,36 +71,40 @@ class Gui:
 
     def check(self):
         global mriImage
-        #print(mriImage)
+        # print(mriImage)
         if (self.val.get() == 1):
-            self.listOfWinFrame = 0
+            # self.listOfWinFrame = 0
             self.listOfWinFrame = list()
             self.listOfWinFrame.append(self.FirstFrame)
 
             self.listOfWinFrame[0].setCallObject(self.DT)
 
             res = predictTumor(mriImage)
-            
+
             if res > 0.5:
-                resLabel = tkinter.Label(self.FirstFrame.getFrames(), text="Tumor Detected", height=1, width=20)
-                resLabel.configure(background="White", font=("Comic Sans MS", 16, "bold"), fg="red")
+                resLabel = tkinter.Label(self.FirstFrame.getFrames(
+                ), text="Tumor Detected", height=1, width=20)
+                resLabel.configure(background="White", font=(
+                    "Comic Sans MS", 16, "bold"), fg="red")
             else:
-                resLabel = tkinter.Label(self.FirstFrame.getFrames(), text="No Tumor", height=1, width=20)
-                resLabel.configure(background="White", font=("Comic Sans MS", 16, "bold"), fg="green")
+                resLabel = tkinter.Label(
+                    self.FirstFrame.getFrames(), text="No Tumor", height=1, width=20)
+                resLabel.configure(background="White", font=(
+                    "Comic Sans MS", 16, "bold"), fg="green")
 
             resLabel.place(x=700, y=450)
 
         elif (self.val.get() == 2):
-            self.listOfWinFrame = 0
+            # self.listOfWinFrame = 0
             self.listOfWinFrame = list()
             self.listOfWinFrame.append(self.FirstFrame)
 
             self.listOfWinFrame[0].setCallObject(self.DT)
             self.listOfWinFrame[0].setMethod(self.DT.removeNoise)
-            secFrame = Frames(self, MainWindow, self.wWidth, self.wHeight, self.DT.displayTumor, self.DT)
+            secFrame = Frames(self, MainWindow, self.wWidth,
+                              self.wHeight, self.DT.displayTumor, self.DT)
 
             self.listOfWinFrame.append(secFrame)
-
 
             for i in range(len(self.listOfWinFrame)):
                 if (i != 0):
@@ -108,5 +116,6 @@ class Gui:
 
         else:
             print("Not Working")
+
 
 mainObj = Gui()
